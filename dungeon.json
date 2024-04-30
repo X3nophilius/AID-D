@@ -1,104 +1,280 @@
 {
-    "rooms":[
-        {
-            "name":"entrance",
-            "pos":[
-                [1,7],
-                [0,6],
-                [1,6],
-                [2,6]
+    "start": "garden",
+    "instructions": "enter house",
+    "rooms": {
+        "entrance": {
+            "pos": [
+                [
+                    1,
+                    7
+                ],
+                [
+                    0,
+                    6
+                ],
+                [
+                    1,
+                    6
+                ],
+                [
+                    2,
+                    6
+                ]
             ],
-            "connections":[
+            "connections": [
                 "garden",
                 "hallway"
             ],
-            "items":[
+            "doors": {
+                "garden": {
+                    "key": false
+                },
+                "hallway": {
+                    "key": false
+                }
+            }
+        },
+        "hallway": {
+            "connections": [
+                "entrance",
+                "kitchen"
+            ],
+            "pos": [
+                [
+                    1,
+                    5
+                ],
+                [
+                    0,
+                    4
+                ],
+                [
+                    1,
+                    4
+                ],
+                [
+                    2,
+                    4
+                ],
+                [
+                    3,
+                    4
+                ],
+                [
+                    4,
+                    4
+                ],
+                [
+                    5,
+                    4
+                ],
+                [
+                    6,
+                    4
+                ],
+                [
+                    0,
+                    3
+                ],
+                [
+                    1,
+                    3
+                ],
+                [
+                    2,
+                    3
+                ],
+                [
+                    3,
+                    3
+                ],
+                [
+                    4,
+                    3
+                ],
+                [
+                    5,
+                    3
+                ],
+                [
+                    6,
+                    3
+                ]
+            ],
+            "doors": {
+                "kitchen": {
+                    "key": false
+                },
+                "entrance": {
+                    "key": false
+                }
+            },
+            "items": [
                 "knife",
                 "key"
             ]
         },
-        {
-            "name":"hallway",
-            "connections":[
-                "entrance",
-                "kitchen"
-            ],
-            "pos":[
-                [1,5],
-                [0,4],
-                [1,4],
-                [2,4],
-                [3,4],
-                [4,4],
-                [5,4],
-                [6,4],
-                [0,3],
-                [1,3],
-                [2,3],
-                [3,3],
-                [4,3],
-                [5,3],
-                [6,3]
-            ],
-            "items":[
-                "knife",
-                "key"
-            ]
-        },
-        {
-            "name":"kitchen",
-            "connections":[
+        "kitchen": {
+            "connections": [
                 "garden",
                 "hallway"
             ],
-            "pos":[
-                [7,3],
-                [8,3],
-                [9,3],
-                [8,4],
-                [9,4],
-                [8,5],
-                [9,5],
-                [9,6],
-                [8,6],
-                [9,7],
-                [8,7],
-                [9,8],
-                [8,8],
-                [9,9],
-                [8,9],
-                [7,9]
-
+            "pos": [
+                [
+                    7,
+                    3
+                ],
+                [
+                    8,
+                    3
+                ],
+                [
+                    9,
+                    3
+                ],
+                [
+                    8,
+                    4
+                ],
+                [
+                    9,
+                    4
+                ],
+                [
+                    8,
+                    5
+                ],
+                [
+                    9,
+                    5
+                ],
+                [
+                    9,
+                    6
+                ],
+                [
+                    8,
+                    6
+                ],
+                [
+                    9,
+                    7
+                ],
+                [
+                    8,
+                    7
+                ],
+                [
+                    9,
+                    8
+                ],
+                [
+                    8,
+                    8
+                ],
+                [
+                    9,
+                    9
+                ],
+                [
+                    8,
+                    9
+                ],
+                [
+                    7,
+                    9
+                ]
             ],
-            "items":[
-
-            ]
+            "items": [],
+            "doors": {
+                "garden": {
+                    "key": true,
+                    "keyid": "0001"
+                },
+                "hallway": {
+                    "key": false
+                }
+            }
         },
-        {
-            "name":"garden",
-            "connections":[
+        "garden": {
+            "connections": [
                 "entrance",
                 "kitchen"
             ],
-            "pos":[
-                [0,9],
-                [1,9],
-                [2,9],
-                [3,9],
-                [4,9],
-                [5,9],
-                [6,9],
-                [0,8],
-                [1,8],
-                [2,8],
-                [3,8],
-                [4,8],
-                [5,8],
-                [6,8]
-            ]
-
+            "pos": [
+                [
+                    0,
+                    9
+                ],
+                [
+                    1,
+                    9
+                ],
+                [
+                    2,
+                    9
+                ],
+                [
+                    3,
+                    9
+                ],
+                [
+                    4,
+                    9
+                ],
+                [
+                    5,
+                    9
+                ],
+                [
+                    6,
+                    9
+                ],
+                [
+                    0,
+                    8
+                ],
+                [
+                    1,
+                    8
+                ],
+                [
+                    2,
+                    8
+                ],
+                [
+                    3,
+                    8
+                ],
+                [
+                    4,
+                    8
+                ],
+                [
+                    5,
+                    8
+                ],
+                [
+                    6,
+                    8
+                ]
+            ],
+            "doors": {
+                "kitchen": {
+                    "key": true,
+                    "keyid": "0001"
+                },
+                "entrance": {
+                    "key": false
+                }
+            }
         }
-    ],
-    "start":"garden",
-    "instructions":"enter house"
+    },
+    "items": {
+        "0001": {
+            "name": "key",
+            "description": "a key for the kitchen door",
+            "icon": "⚿"
+        }
+    }
 }
