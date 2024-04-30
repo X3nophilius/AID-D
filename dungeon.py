@@ -3,6 +3,21 @@ import json, os
 PLAYERNUM = 1
 players = []
 
+dungeonscale=(10,10)
+
+colors = {
+    "BLACK":'\033[30m',
+    "RED":'\033[31m',
+    "GREEN":'\033[32m',
+    "YELLOW":'\033[33m',
+    "BLUE":'\033[34m',
+    "MAGENTA":'\033[35m',
+    "CYAN":'\033[36m',
+    "WHITE":'\033[37m',
+    "UNDERLINE":'\033[4m',
+    "RESET":'\033[0m'
+}
+
 class entity():
     def init():
         print("entity initialized")
@@ -32,7 +47,7 @@ for i in range(PLAYERNUM):
 
 def drawinv(player):
     for item in player.inventory:
-        print(dungeon["items"][item]["name"]+" "+dungeon["items"][item]["description"])
+        print(dungeon["items"][item]["name"]+" : "+dungeon["items"][item]["description"])
 
 def drawmap(player):
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -40,9 +55,9 @@ def drawmap(player):
         for x in range(dungeonscale[0]):
             for room in dungeon["rooms"]:
                 if room == player.location: 
-                    color="\033[96m"
-                else: 
-                    color="\033[0m"
+                    color="\033[31m"
+                elif room != player.location:
+                    color=colors[dungeon["rooms"][room]["color"]]
                     
                 room = dungeon["rooms"][room]
                 if [x,y] in room["pos"]:
@@ -53,9 +68,6 @@ def drawmap(player):
             print(char,end="")    
         print("\n\033[0m",end="")
 
-
-dungeonscale=(10,10)
-
 while True:
     for player in players:
         #drawdungeon 
@@ -64,22 +76,16 @@ while True:
         print(f"you are in {player.location}")
         print("adjacent locations "+", ".join(dungeon["rooms"][player.location]["connections"]))
         entry = input().split(" ",1)
-        print(entry)
-        input()
         #parse user input
-        if "goto" in entry[0] and entry[1] in dungeon["rooms"][player.location]["connections"]:
-            if dungeon["rooms"][player.location]["doors"][entry[1]]["key"] == True:
-                if dungeon["rooms"][player.location]["doors"][entry[1]]["keyid"] not in player.inventory:
-                    print(f"You need a key to enter {splitString}")
-                    drawinv(player)
-                    input()
-                    break
+        if "goto" in entry[0] and  any(entry[1] in s for s in dungeon["rooms"][player.location]["connections"]):
+            if dungeon["rooms"][player.location]["doors"][entry[1]]["key"] == True and dungeon["rooms"][player.location]["doors"][entry[1]]["keyid"] not in player.inventory:
+                print(f"You need a key to enter {entry[1]}")
+                drawinv(player)
+                input()
             else:
-                player.location = entry[1]
+                player.location = entry[1].replace(" ","")
                     
-        elif 'say' in entry:
-            res = entry.split("say ", 1)
-            splitString = res[1]
+        elif 'say' in entry[0]:
             print(f'you said {entry[1]}')
             input()
             

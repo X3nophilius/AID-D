@@ -3,6 +3,7 @@
     "instructions": "enter house",
     "rooms": {
         "entrance": {
+            "color":"YELLOW",
             "pos": [
                 [
                     1,
@@ -35,6 +36,7 @@
             }
         },
         "hallway": {
+            "color":"MAGENTA",
             "connections": [
                 "entrance",
                 "kitchen"
@@ -115,6 +117,7 @@
             ]
         },
         "kitchen": {
+            "color":"BLUE",
             "connections": [
                 "garden",
                 "hallway"
@@ -197,6 +200,7 @@
             }
         },
         "garden": {
+            "color":"GREEN",
             "connections": [
                 "entrance",
                 "kitchen"
