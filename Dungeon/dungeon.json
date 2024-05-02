@@ -1,6 +1,7 @@
 {
     "start": "garden",
     "instructions": "enter house",
+    "intro":"hello players welcome your goal it to enter the dungeon and kill the boss",
     "rooms": {
         "entrance": {
             "color":"YELLOW",
@@ -278,7 +279,15 @@
         "0001": {
             "name": "key",
             "description": "a key for the kitchen door",
-            "icon": "⚿"
+            "icon": "⚿",
+            "type":"key"
+        },
+        "0002": {
+            "name": "knoife",
+            "description": "knoufe",
+            "icon": "knife",
+            "type":"weapon",
+            "damage":"10"
         }
     }
 }
