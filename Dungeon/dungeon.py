@@ -1,4 +1,4 @@
-import json, os, time
+import json, os, time, random
 
 colors = {
     "BLACK":'\033[30m',
@@ -28,7 +28,7 @@ class player:
 def loadplayer(dungeon):
     name = input("Playername: ")
     age = input("Age: ")
-    inventory = ["0001"]
+    inventory = []
     location=dungeon["start"]
     tempplayer = player(age,name,location,inventory)
     return tempplayer
@@ -75,8 +75,8 @@ def drawmap(dungeon,player,dungeonscale):
 
 def startdungeon(file, playernum, players):
     dungeon = loaddungeon(file)
-    drawanimation("startanimation.json")
-    drawanimation("dungeontitle.json")
+    drawanimation("Dungeon/animations/startanimation.json")
+    drawanimation("Dungeon/animations/dungeontitle.json")
     for i in range(playernum):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"============ Player:{i+1} ============")
@@ -93,3 +93,22 @@ def stats(player):
     print(f"location: {player.location}")
     print(f"items: {len(player.inventory)}")
     print(f"=================={len(player.name)*'='}")
+
+def drawroom(name):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    with open(f"Dungeon/rooms/{name}.json") as f:
+        room = json.load(f)
+    f.close()
+    for i in room["layout"]:
+        print(i)
+
+def searchcontainer(player, entry, dungeon):
+    with open(f"Dungeon/rooms/{player.location}.json") as f:
+        room = json.load(f)
+    f.close()
+    if entry in room["containers"]:
+        for i in room["containers"][entry]["items"]:
+            if random.random() < room["containers"][entry]["items"][i]:
+                player.inventory.append(i)
+                print(f"you found {(dungeon['items'][i]['name'])}")
+    else: print("container does not exist")
