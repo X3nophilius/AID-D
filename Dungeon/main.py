@@ -44,3 +44,13 @@ while True:
             print(f"you are in {player.location}")
             print("adjacent locations "+", ".join(dungeon["rooms"][player.location]["connections"]))
             input()
+        
+        elif 'help' in entry[0]:
+            print("availible commands:")
+            print("""- goto [room] | move to adjacent room 
+                  - map | draws map with player location marked in red
+                  -say [message] | says message
+                  -inv |outputs current players inventory
+                  -search [container] | searches container in current room
+
+""")
