@@ -15,9 +15,10 @@ while True:
         dg.drawroom(player.location)
         dg.stats(player)
         entry = input().split(" ",1)
+        entry.append('')
         #parse user input
         if "goto" in entry[0]:
-            if any(entry[1] in s for s in dungeon["rooms"][player.location]["connections"]):
+            if any(entry[1] in s for s in dungeon["rooms"][player.location]["connections"]) and entry[1] != '':
                 if dungeon["rooms"][player.location]["doors"][entry[1]]["key"] == True and dungeon["rooms"][player.location]["doors"][entry[1]]["keyid"] not in player.inventory:
                     print(f"You need a key to enter {entry[1]}")
                     dg.drawinv(dungeon,player)
@@ -25,7 +26,8 @@ while True:
                 else:
                     player.location = entry[1].replace(" ","")
             else:
-                print(f"room {entry[1]} is not adjacent dor does not exist")
+                print(f"room {entry[1]} is not adjacent or does not exist")
+                input()
                     
         elif 'say' in entry[0]:
             print(f'you said {entry[1]}')
@@ -51,6 +53,5 @@ while True:
                   - map | draws map with player location marked in red
                   -say [message] | says message
                   -inv |outputs current players inventory
-                  -search [container] | searches container in current room
-
-""")
+                  -search [container] | searches container in current room""")
+            input()
