@@ -1,9 +1,4 @@
-import json, os
-
-PLAYERNUM = 1
-players = []
-
-dungeonscale=(10,10)
+import json, os, time
 
 colors = {
     "BLACK":'\033[30m',
@@ -30,7 +25,7 @@ class player:
         self.location = location
         self.inventory = inventory
 
-def loadplayer():
+def loadplayer(dungeon):
     name = input("Playername: ")
     age = input("Age: ")
     inventory = ["0001"]
@@ -38,18 +33,27 @@ def loadplayer():
     tempplayer = player(age,name,location,inventory)
     return tempplayer
 
-with open("dungeon.json","r") as f:
-    dungeon = json.load(f)
+def drawanimation(file):
+    with open(file) as f:
+        animation = json.load(f)
     f.close()
+    for i in range(animation["num"]):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        for i in animation["frames"][str(i)]:
+            print(i)
+        time.sleep(animation["delay"])
 
-for i in range(PLAYERNUM):
-    players.append(loadplayer())
+def loaddungeon(file):
+    with open(file,"r") as f:
+        dungeon = json.load(f)
+        f.close()
+        return dungeon
 
-def drawinv(player):
+def drawinv(dungeon,player):
     for item in player.inventory:
         print(dungeon["items"][item]["name"]+" : "+dungeon["items"][item]["description"])
 
-def drawmap(player):
+def drawmap(dungeon,player,dungeonscale):
     os.system('cls' if os.name == 'nt' else 'clear')
     for y in range(dungeonscale[1]):
         for x in range(dungeonscale[0]):
@@ -68,27 +72,24 @@ def drawmap(player):
             print(char,end="")    
         print("\n\033[0m",end="")
 
-while True:
-    for player in players:
-        #drawdungeon 
-        drawmap(player)
 
-        print(f"you are in {player.location}")
-        print("adjacent locations "+", ".join(dungeon["rooms"][player.location]["connections"]))
-        entry = input().split(" ",1)
-        #parse user input
-        if "goto" in entry[0] and  any(entry[1] in s for s in dungeon["rooms"][player.location]["connections"]):
-            if dungeon["rooms"][player.location]["doors"][entry[1]]["key"] == True and dungeon["rooms"][player.location]["doors"][entry[1]]["keyid"] not in player.inventory:
-                print(f"You need a key to enter {entry[1]}")
-                drawinv(player)
-                input()
-            else:
-                player.location = entry[1].replace(" ","")
-                    
-        elif 'say' in entry[0]:
-            print(f'you said {entry[1]}')
-            input()
-            
-        elif 'inv' in entry[0]:
-            drawinv(player)
-            input()
+def startdungeon(file, playernum, players):
+    dungeon = loaddungeon(file)
+    drawanimation("startanimation.json")
+    drawanimation("dungeontitle.json")
+    for i in range(playernum):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"============ Player:{i+1} ============")
+        players.append(loadplayer(dungeon))
+    return dungeon
+
+
+def intro(dungeon):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(dungeon["intro"])
+
+def stats(player):
+    print(f"======== {player.name} ========")
+    print(f"location: {player.location}")
+    print(f"items: {len(player.inventory)}")
+    print(f"=================={len(player.name)*'='}")
