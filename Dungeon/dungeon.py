@@ -24,6 +24,7 @@ class player:
         self.name = name
         self.location = location
         self.inventory = inventory
+        self.searched = {}
 
 def loadplayer(dungeon):
     name = input("Playername: ")
@@ -106,9 +107,16 @@ def searchcontainer(player, entry, dungeon):
     with open(f"Dungeon/rooms/{player.location}.json") as f:
         room = json.load(f)
     f.close()
-    if entry in room["containers"]:
-        for i in room["containers"][entry]["items"]:
-            if random.random() < room["containers"][entry]["items"][i]:
-                player.inventory.append(i)
-                print(f"you found {(dungeon['items'][i]['name'])}")
-    else: print("container does not exist")
+    if player.location not in player.searched:
+        player.searched[player.location] = []
+    if entry in room["containers"]: 
+        if entry not in player.searched[player.location]:
+            for i in room["containers"][entry]["items"]:
+                if random.random() < room["containers"][entry]["items"][i]:
+                    player.inventory.append(i)
+                    print(f"you found {(dungeon['items'][i]['name'])}")
+            player.searched[player.location].append(entry)
+        else:
+            print(f"you allready searched {entry}")
+    else:
+        print(f"{entry} does not exist")
